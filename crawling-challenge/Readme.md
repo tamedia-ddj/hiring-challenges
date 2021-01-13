@@ -3,32 +3,45 @@
 ## Intro 
 
 This challenge is about showing us that you are a hacker with a fast perception and excellent analytic skills but also that you are able to build robust and scalable solutions.
-We want you to build a *distibuted crawler* that retrieves a list of products that any of our major sites offer. 
+We want you to build a *distibuted crawler* that retrieves a list of articles from one of our newspaper sites, does some transformations on the data and serves back the results via a simple API endpoint.
 
-### Sites
-- www.ricardo.ch - Platform similar to ebay [Play Store](https://play.google.com/store/apps/details?id=com.qxl.Client)
-- www.tutti.ch - Platform similar to craigslist [Play Store](https://play.google.com/store/apps/details?id=ch.tutti)
-- www.20min.ch - News [Play Store](https://play.google.com/store/apps/details?id=ch.iAgentur.i20Min)
-- www.tagesanzeiger.ch - News [Play Store](https://play.google.com/store/apps/details?id=com.phonegap.tagesanzeiger)
-- www.homegate.ch - Real estate [Play Store](https://play.google.com/store/apps/details?id=ch.homegate.mobile)
-- www.jobs.ch - Jobs [Play Store](https://play.google.com/store/apps/details?id=com.iAgentur.jobsCh)
+## Scenario
+
+For an internal review, we'd like to have an API endpoint that, given a particular date (e.g. 2021-01-10), returns the **number** of articles about Covid-19 published on that day on a subsection of one of our sites (see below).
+
+An article about Covid-19 is *defined as follows*: Contains the word "Corona" OR the word "Covid-19" in the titleHeader OR the title OR the lead:
+
+![bl](img/challenge.jpg)
+
+
+## Site to crawl
+
+- www.tagesanzeiger.ch/schweiz - Subsection Schweiz (Switzerland)
+
 
 ## Step 1
-You should choose one of the above platforms and then reverse engineer their mobile API.
-E.g. by using Mitmproxy or Charles Proxy. 
-Extract the endpoints to get the list/search and the detail entries.
+
+You should figure out how to crawl the above website best and store the crawled articles and/or the results of your transformation steps in the appropriate storage system.
+
+- to speed up the crawling, the program should scale horizontally, i.e. can be deployed in a cluster, while still dumping each article only once
+- bonus if you come up with some strategies regarding fault tolerance and error handling
 
 ## Step 2
-Use their API to build a distributed crawler in your language/framework of choice with the following features:
 
-- one JSON record per article with full details
-- results in one, or many files, one JSON record per line, gzip file
-- to speed up the crawling, the program should scale horizontally, i.e. can be deployed in a cluster, while still dumping each article only once
-- provide a [Dockerfile](https://docs.docker.com/engine/reference/builder/) to build your code
-- write a [docker-compose.yml](https://docs.docker.com/compose/) for local testing
+Build a simple API endpoint that returns the amount of Covid-19 articles published on a particular day given that day. The method (POST or GET) and the specifics of the API are up to you. 
 
-You do not necessarily need to implement all features (e.g. docker-compose) but make sure you document your decisions and TODOs.
-Watch your time and try to get as far as possible in about 5-8 hours of hacking.
+- the API does not have to be deployed on a cloud infrastructure for this exercise, it's enough if it runs on localhost
+- bonus if you come up with a strategy for deploying the whole system on the cloud
+
+
+## Step 3
+
+Containerize the single components of your crawling system and write a [docker-compose.yml](https://docs.docker.com/compose/) for local testing.
+
+You do not necessarily need to implement all features but make sure you document your decisions and TODOs.
+
+Watch your time and try to get as far as possible in about 4-6 hours of hacking.
+
 
 ## Evaluation criterias
 
@@ -39,16 +52,16 @@ What we look for:
 - [Clean code](https://www.amazon.com/Clean-Coder-Conduct-Professional-Programmers/dp/0137081073/) and [architecture](https://www.amazon.com/Clean-Architecture-Craftsmans-Software-Structure/dp/0134494164/)
 - proper use of language and framework idioms
 - usage of external libraries that should simplify the task
-- strip away features, time is scarce!
+- strip away unneeded features, time is scarce!
 - document your approach, your decisions and your general notes
-
-Bonus:
-- minimize resource usage
-- provide a critique of the API you reverse engineered
-- add additional features/gimmicks/easter egg
-- extra bonus points for making us laugh
-
-Hints:
 - check that your last commit compiles
 - send us link where to checkout code from (e.g. github)
+
+Bonus:
+- as detailed in the single steps
+
+Hints:
+- there is actually an API that our frontend uses to fetch the articles from the backend (CMS)
+- the subsection is constantly updated by our journalists - make sure not to miss an article
+
 
