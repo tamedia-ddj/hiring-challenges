@@ -23,7 +23,7 @@ An article about Covid-19 is *defined as follows*: Contains the word "Corona" OR
 
 You should figure out how to crawl the above website best and store the crawled articles and/or the results of your transformation steps in the appropriate storage system.
 
-- to speed up the crawling, the program should scale horizontally, i.e. can be deployed in a cluster, while still dumping each article only once
+- to speed up the crawling, the program should scale horizontally, i.e. can be deployed in a cluster, while still dumping each article only once (we know that for this type of crawler, a distributed system would probably not be necessary, still we'd like to see how you would do it if it were necessary, e.g. because there are thousands of changes on the website to be crawled every day)
 - bonus if you come up with some strategies regarding fault tolerance and error handling
 
 ## Step 2
